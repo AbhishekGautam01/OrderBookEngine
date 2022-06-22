@@ -18,8 +18,8 @@ namespace OrderBookEngineServer.Logging
                 throw new InvalidOperationException($"{nameof(TextLogger)} doesn't match LoggerType of {_loggerConfiguration.LoggerType}");
             var now = DateTime.Now;
             string logDirectory = Path.Combine(_loggerConfiguration.TextLoggerConfiguration.Directory, $"{now:yyyy-MM-dd}");
+            string baseLogName = Path.ChangeExtension($"{_loggerConfiguration.TextLoggerConfiguration.FileName}--{now:HH_mm_ss}", _loggerConfiguration.TextLoggerConfiguration.FileExtension);
             Directory.CreateDirectory(logDirectory);
-            string baseLogName = Path.Combine(_loggerConfiguration.TextLoggerConfiguration.FileName, _loggerConfiguration.TextLoggerConfiguration.FileExtension);
             string filePath = Path.Combine(logDirectory, baseLogName);  
             _ = Task.Run(() => LogAsync(filePath, _logQueue, _tokenSource.Token));
         }
@@ -27,7 +27,7 @@ namespace OrderBookEngineServer.Logging
         private static async Task LogAsync(string filepath, BufferBlock<LogInformation> logQueue, CancellationToken cancellationToken)
         {
             using var fileStream = new FileStream(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.Read);
-            using var streamWriter = new StreamWriter(fileStream);
+            using var streamWriter = new StreamWriter(fileStream) { AutoFlush = true };
             try
             {
                 while (true)

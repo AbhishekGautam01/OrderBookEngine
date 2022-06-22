@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using OrderBookEngineServer.Core.ServerConfiguration;
 using OrderBookEngineServer.Logging;
+using OrderBookEngineServer.Logging.LoggingConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace OrderBookEngineServer.Core
                 // Adding configurations
                 services.AddOptions();
                 services.Configure<OrderBookEngineServerConfiguration>(context.Configuration.GetSection(nameof(OrderBookEngineServerConfiguration)));
-
+                services.Configure<LoggerConfiguration>(context.Configuration.GetSection(nameof(LoggerConfiguration)));
                 //Adding Singleton Objects
                 services.AddSingleton<IOrderBookEngineServer, OrderBookEngineServer>();
                 services.AddSingleton<ITextLogger, TextLogger>();
