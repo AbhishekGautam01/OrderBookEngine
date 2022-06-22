@@ -1,12 +1,14 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace OrderBookEngine
+using OrderBookEngineServer.Core;
+
+// Building our host whcih would have DI, Hosted Service configured and built
+using var engine = OrderBookEnginerServerHostBuilder.BuildOrderBookEngineServer();
+OrderBookEngineServerServiceProvider.ServiceProvider = engine.Services;
 {
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
-    }
+    // Creating a manual scope before running in order to add scoped functionality
+    using var scope = OrderBookEngineServerServiceProvider.ServiceProvider.CreateScope();
+    await engine.RunAsync().ConfigureAwait(false); // Configure await to further optimize
 }

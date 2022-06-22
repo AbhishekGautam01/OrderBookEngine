@@ -10,7 +10,8 @@ using OrderBookEngineServer.Core.ServerConfiguration;
 
 namespace OrderBookEngineServer.Core
 {
-    class OrderBookEngineServer : BackgroundService, IOrderBookEngineServer
+    // Marking this class as sealed to avoid anyone for further overriding the methods.
+    sealed class OrderBookEngineServer : BackgroundService, IOrderBookEngineServer
     {
         private readonly ILogger<OrderBookEngineServer> _logger;
         private readonly OrderBookEngineServerConfiguration _config;
@@ -30,10 +31,12 @@ namespace OrderBookEngineServer.Core
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation($"Started {nameof(OrderBookEngineServer)}");
             while (!stoppingToken.IsCancellationRequested)
             {
 
             }
+            _logger.LogInformation($"Stoped {nameof(OrderBookEngineServer)}");
             return Task.CompletedTask;
         }
     }
