@@ -7,15 +7,16 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using OrderBookEngineServer.Core.ServerConfiguration;
+using OrderBookEngineServer.Logging;
 
 namespace OrderBookEngineServer.Core
 {
     // Marking this class as sealed to avoid anyone for further overriding the methods.
     sealed class OrderBookEngineServer : BackgroundService, IOrderBookEngineServer
     {
-        private readonly ILogger<OrderBookEngineServer> _logger;
+        private readonly ITextLogger _logger;
         private readonly OrderBookEngineServerConfiguration _config;
-        public OrderBookEngineServer(ILogger<OrderBookEngineServer> logger, IOptions<OrderBookEngineServerConfiguration> config)
+        public OrderBookEngineServer(ITextLogger logger, IOptions<OrderBookEngineServerConfiguration> config)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _config = config.Value ?? throw new ArgumentNullException(nameof(config));
@@ -31,12 +32,12 @@ namespace OrderBookEngineServer.Core
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation($"Started {nameof(OrderBookEngineServer)}");
+            _logger.Information(nameof(OrderBookEngineServer), $"Started {nameof(OrderBookEngineServer)}");
             while (!stoppingToken.IsCancellationRequested)
             {
 
             }
-            _logger.LogInformation($"Stoped {nameof(OrderBookEngineServer)}");
+            _logger.Information(nameof(OrderBookEngineServer),$"Stoped {nameof(OrderBookEngineServer)}");
             return Task.CompletedTask;
         }
     }

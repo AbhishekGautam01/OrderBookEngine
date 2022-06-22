@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrderBookEngineServer.Core.ServerConfiguration;
+using OrderBookEngineServer.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,7 @@ namespace OrderBookEngineServer.Core
 
                 //Adding Singleton Objects
                 services.AddSingleton<IOrderBookEngineServer, OrderBookEngineServer>();
+                services.AddSingleton<ITextLogger, TextLogger>();
 
                 // Adding Hosted Service
                 services.AddHostedService<OrderBookEngineServer>();
