@@ -3,9 +3,6 @@ using Microsoft.Extensions.Hosting;
 using OrderBookEngineServer.Core.ServerConfiguration;
 using OrderBookEngineServer.Logging;
 using OrderBookEngineServer.Logging.LoggingConfiguration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OrderBookEngineServer.Core
 {

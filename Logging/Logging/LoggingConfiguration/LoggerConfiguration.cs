@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrderBookEngineServer.Logging.LoggingConfiguration
+﻿namespace OrderBookEngineServer.Logging.LoggingConfiguration
 {
     public class LoggerConfiguration
     {
